@@ -1,14 +1,9 @@
 from flask import Flask, render_template, session, redirect, url_for, session
 from flask_wtf import FlaskForm
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from magnum import Magnum
 from wtforms import StringField, SubmitField
 # from wtforms.validators import NumberRange
 # import numpy as np 
 import joblib
-
-
 
 def return_prediction_rf(rf_classifier, scaler_x, scaler_y, sample_json):
     # Fields for input json
@@ -28,9 +23,7 @@ def return_prediction_rf(rf_classifier, scaler_x, scaler_y, sample_json):
     
     return wine_class
 
-# app = Flask(__name__)
-app = FastAPI()
-handler = Magnum(app)
+app = Flask(__name__)
 
 # Configure a secret SECRET_KEY
 app.config['SECRET_KEY'] = 'mysecretkey'
@@ -54,7 +47,7 @@ class FlowerForm(FlaskForm):
 
 
 @app.route('/', methods=['GET', 'POST'])
-async def index():
+def index():
 
     # Create instance of the form.
     form = FlowerForm()
@@ -76,7 +69,7 @@ async def index():
 
 
 @app.route('/prediction')
-async def prediction():
+def prediction():
 
     content = {}
 
